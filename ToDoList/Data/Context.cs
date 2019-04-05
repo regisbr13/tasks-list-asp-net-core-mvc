@@ -6,7 +6,7 @@ namespace ToDoList.Data
 {
     public class Context : DbContext
     {
-            public DbSet<ToDo> Tasks { get; set; }
+            public DbSet<ToDo> ToDoes { get; set; }
 
             public Context(DbContextOptions<Context> options) : base(options) { }
     }
