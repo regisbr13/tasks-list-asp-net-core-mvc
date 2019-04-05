@@ -1,12 +1,12 @@
 ﻿@model ToDoList.Models.ToDo
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar";
 }
 
-<h2>Edit</h2>
+<h2>@ViewData["Title"]</h2>
 
-<h4>ToDo</h4>
+<h4>Tarefa:</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -34,19 +34,19 @@
                 <span asp-validation-for="Final" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Priority" class="control-label"></label>
+                <label asp-for="Priority" class="control-label">Prioridade: (Alta, Média, Crítica)</label>
                 <input asp-for="Priority" class="form-control" />
                 <span asp-validation-for="Priority" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Salvar" class="btn btn-success" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-link">Voltar</a>
 </div>
 
 @section Scripts {
