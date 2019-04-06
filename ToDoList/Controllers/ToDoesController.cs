@@ -6,8 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ToDoList.Models;
+using ToDoList.Services;
 
-namespace ToDoList.Data
+namespace ToDoList.Controllers
 {
     public class ToDoesController : Controller
     {

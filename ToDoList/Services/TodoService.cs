@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using ToDoList.Data;
 using ToDoList.Models;
 
-namespace ToDoList
+namespace ToDoList.Services
 {
     // SERVIÇO PARA O CRUD:
     public class TodoService
