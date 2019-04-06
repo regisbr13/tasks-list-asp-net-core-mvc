@@ -1,0 +1,60 @@
+﻿@model IEnumerable<ToDoList.Models.ToDo>
+
+@if (Model.Any(x => x.Priority == "Alta"))
+{
+    <div class="panel panel-warning">
+        <div class="panel-heading">
+            Tarefas com prioridade <strong>Alta</strong> @Model.Count(x => x.Priority == "Alta")
+        </div>
+        <div class="panel-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Description)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Initial)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Final)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        @if (item.Priority == "Alta")
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Initial)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Final)
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Editar</a>
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Detalhes</a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Deletar</a>
+                                </td>
+                            </tr>
+                        }
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+}
