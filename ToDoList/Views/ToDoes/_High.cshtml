@@ -2,11 +2,11 @@
 
 @if (Model.Any(x => x.Priority == "Alta"))
 {
-    <div class="panel panel-warning">
+    <div class="panel panel-warning  table-responsive">
         <div class="panel-heading">
-            Tarefas com prioridade <strong>Alta</strong> @Model.Count(x => x.Priority == "Alta")
+            Tarefas com prioridade <strong>Alta:</strong> @Model.Count(x => x.Priority == "Alta")
         </div>
-        <div class="panel-body">
+        <div class="panel-body  table-responsive">
             <table class="table">
                 <thead>
                     <tr>
@@ -43,7 +43,7 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Final)
                                 </td>
-                                <td>
+                                <td class="btn-group-sm">
                                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Editar</a>
                                     <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Detalhes</a>
                                     <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Deletar</a>
