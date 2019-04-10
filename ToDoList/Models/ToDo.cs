@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using ToDoList.Services.Validation;
 
 namespace ToDoList.Models
 {
@@ -14,10 +15,13 @@ namespace ToDoList.Models
         [Display(Name = "Descrição")]
         public string Description { get; set; }
 
+        [Required(ErrorMessage = "data requerida")]
         [DisplayFormat(DataFormatString ="{0: dd/MM/yyyy - HH:mm}")]
         [Display(Name = "Início")]
         public DateTime Initial { get; set; }
 
+        [Required(ErrorMessage = "data requerida")]
+        [Date]
         [DisplayFormat(DataFormatString = "{0: dd/MM/yyyy - HH:mm}")]   
         [Display(Name = "Término")]
         public DateTime Final { get; set; }
