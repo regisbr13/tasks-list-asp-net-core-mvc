@@ -4,11 +4,37 @@
     ViewData["Title"] = "Tarefas";
 }
 <br />
+
+@if(TempData["confirm"] != null)
+{
+    <p class="alert alert-success" role="alert">@TempData["confirm"]</p>
+}
+
 <p>
-    <a asp-action="Create" class="btn btn-success">Nova Tarefa</a>
+    <a asp-action="Create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus-sign"></i></a>
 </p>
 
 <partial name="_Middle" />
 <partial name="_High" />
 <partial name="_Critic" />
 
+@section Scripts{
+    <script>
+       $(function () {
+            $(".detail").click(function () {
+                var id = $(this).attr("data-id");
+                $("#modal").load("/Detalhes?Id=" + id, function () {
+                    $("#modal").modal();
+                })
+            })
+        });
+        $(function () {
+            $(".delete").click(function () {
+                var id = $(this).attr("data-id");
+                $("#modal").load("/Deletar?Id=" + id, function () {
+                    $("#modal").modal();
+                })
+            })
+        });
+    </script>
+}

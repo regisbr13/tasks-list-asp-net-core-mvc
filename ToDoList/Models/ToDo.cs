@@ -10,6 +10,7 @@ namespace ToDoList.Models
 
         [Required(ErrorMessage ="nome requerido")]
         [Display(Name = "Nome")]
+        [StringLength(15, MinimumLength =3, ErrorMessage = "use no máximo {1} caracteres")]
         public string Name { get; set; }
 
         [Display(Name = "Descrição")]
@@ -20,8 +21,8 @@ namespace ToDoList.Models
         [Display(Name = "Início")]
         public DateTime Initial { get; set; }
 
+        [Date(ErrorMessage = "a data de término deve ser posterior")]
         [Required(ErrorMessage = "data requerida")]
-        [Date]
         [DisplayFormat(DataFormatString = "{0: dd/MM/yyyy - HH:mm}")]   
         [Display(Name = "Término")]
         public DateTime Final { get; set; }

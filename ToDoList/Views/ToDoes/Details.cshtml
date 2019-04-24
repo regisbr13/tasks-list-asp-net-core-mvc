@@ -1,48 +1,47 @@
 ﻿@model ToDoList.Models.ToDo
 
 @{
-    ViewData["Title"] = "Detalhes";
+    Layout = null;
+    ViewData["Title"] = "Deletar";
 }
 
-<h2>@ViewData["Title"]</h2>
 
-<div>
-    <h4>Tarefa</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Initial)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Initial)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Final)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Final)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Priority)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Priority)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-info">Editar</a>
-    <a asp-action="Index" class="btn btn-link">Voltar</a>
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Detalhes da tarefa <strong>@Model.Name</strong></h4>
+        </div>
+        <div class="modal-body">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Initial)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Initial)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Final)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Final)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Priority)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Priority)
+                </dd>
+            </dl>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-success btn-sm" data-dismiss="modal"><i class="glyphicon glyphicon-ok"></i></button>
+        </div>
+    </div>
 </div>

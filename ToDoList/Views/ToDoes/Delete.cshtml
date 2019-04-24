@@ -1,51 +1,26 @@
 ﻿@model ToDoList.Models.ToDo
 
 @{
+    Layout = null;
     ViewData["Title"] = "Deletar";
 }
 
-<h2>@ViewData["Title"]</h2>
 
-<h3>Certo de que deseja deletar?</h3>
-<div>
-    <h4>Tarefa</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Initial)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Initial)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Final)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Final)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Priority)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Priority)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Deletar" class="btn btn-danger" />
-        <a asp-action="Index" class="btn btn-link">Voltar</a>
-    </form>
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Excluir tarefa</h4>
+        </div>
+        <div class="modal-body">
+            <p>Deseja mesmo exluir a tarefa <strong>@Model.Name</strong>?</p>
+        </div>
+        <div class="modal-footer">
+            <form asp-action="Delete" method="post">
+                <input type="hidden" asp-for="Id" />
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i></button>
+                <button type="submit" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-ok"></i></button>
+            </form>
+        </div>
+    </div>
 </div>

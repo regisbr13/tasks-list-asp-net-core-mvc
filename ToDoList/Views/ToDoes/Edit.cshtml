@@ -4,12 +4,10 @@
     ViewData["Title"] = "Editar";
 }
 
-<h2>@ViewData["Title"]</h2>
-
-<h4>Tarefa:</h4>
+<h2 class="text-info text-center">@ViewData["Title"]</h2>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4 col-md-offset-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
@@ -42,9 +40,9 @@
                 </select>
                 <span asp-validation-for="Priority" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Salvar" class="btn btn-success" />
-                <a asp-action="Index" class="btn btn-link">Voltar</a>
+            <div class="form-group modal-footer">
+                <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i></button>
+                <a asp-action="Index" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
             </div>
         </form>
     </div>

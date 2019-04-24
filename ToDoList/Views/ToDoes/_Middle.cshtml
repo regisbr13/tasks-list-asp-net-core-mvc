@@ -2,19 +2,16 @@
 
 @if (Model.Any(x => x.Priority == "Média"))
 {
-    <div class="panel panel-info table-responsive">
+    <div class="panel panel-info">
         <div class="panel-heading">
             Tarefas com prioridade <strong>Média:</strong> @Model.Count(x => x.Priority == "Média")
         </div>
-        <div class="panel-body table-responsive">
-            <table class="table">
+        <div class="panel-body">
+            <table class="table table-hover table-striped">
                 <thead>
                     <tr>
                         <th>
                             @Html.DisplayNameFor(model => model.Name)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Description)
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model.Initial)
@@ -35,18 +32,15 @@
                                     @Html.DisplayFor(modelItem => item.Name)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Description)
-                                </td>
-                                <td>
                                     @Html.DisplayFor(modelItem => item.Initial)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Final)
                                 </td>
                                 <td class="btn-group-sm">
-                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Editar</a>
-                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Detalhes</a>
-                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Deletar</a>
+                                    <a class="btn btn-info btn-sm detail" data-id="@item.Id"><i class="glyphicon glyphicon-info-sign"></i></a>
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm edit" data-id="@item.Id"><i class="glyphicon glyphicon-edit"></i></a>
+                                    <a class="btn btn-danger btn-sm delete" data-id="@item.Id"><i class="glyphicon glyphicon-trash"></i></a>
                                 </td>
                             </tr>
                         }
@@ -56,5 +50,8 @@
             </table>
         </div>
     </div>
-
 }
+
+<div class="modal fade" id="modal" role="dialog"></div>
+
+

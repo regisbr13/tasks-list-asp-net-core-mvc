@@ -9,7 +9,7 @@ namespace ToDoList.Services.Validation
         {
             ToDo toDo = (ToDo)validationContext.ObjectInstance;
             if (toDo.Initial >= toDo.Final)
-                return new ValidationResult("a data de término deve ser posterior");
+                return new ValidationResult(default);
             return ValidationResult.Success;
         }
     }
