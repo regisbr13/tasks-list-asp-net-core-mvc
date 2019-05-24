@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using ToDoList.Models;
 using ToDoList.Services;
 
@@ -13,17 +14,33 @@ namespace ToDoList.Controllers
     public class ToDoesController : Controller
     {
         private readonly TodoService _toDoService;
+        private readonly IMemoryCache _cache;
+        
+        // Tempo de duração do Cache
+        private readonly MemoryCacheEntryOptions cacheOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromSeconds(60));
+        // Lista para guardar cache
+        private List<ToDo> list;
 
-        public ToDoesController(TodoService toDoService)
+        public ToDoesController(TodoService toDoService, IMemoryCache cache)
         {
             _toDoService = toDoService;
+            _cache = cache;
         }
 
         // GET:
         [HttpGet("/")]
         public async Task<IActionResult> Index()
         {
-            return View(await _toDoService.FindAllAsync());
+            if (!_cache.TryGetValue("task", out list))
+            {
+                list = await _toDoService.FindAllAsync();
+                _cache.Set("task", list, cacheOptions);
+            }
+            else
+            {
+                list = _cache.Get("task") as List<ToDo>;
+            }
+            return View(list);
         }
 
         // GET:
@@ -35,7 +52,16 @@ namespace ToDoList.Controllers
                 return NotFound();
             }
 
-            var toDo = await _toDoService.FindById(id);
+            if (!_cache.TryGetValue("task", out list))
+            {
+                list = await _toDoService.FindAllAsync();
+                _cache.Set("task", list, cacheOptions);
+            }
+            else
+            {
+                list = _cache.Get("task") as List<ToDo>;
+            }
+            var toDo = list.Find(t => t.Id == id);
             if (toDo == null)
             {
                 return NotFound();
@@ -60,6 +86,8 @@ namespace ToDoList.Controllers
             {
                 TempData["confirm"] = toDo.Name + " criada com sucesso.";
                 await _toDoService.InsertAsync(toDo);
+                list = await _toDoService.FindAllAsync();
+                _cache.Set("task", list, cacheOptions);
                 return RedirectToAction(nameof(Index));
             }
             return View(toDo);
@@ -74,7 +102,17 @@ namespace ToDoList.Controllers
                 return NotFound();
             }
 
-            var toDo = await _toDoService.FindById(id);
+            if (!_cache.TryGetValue("task", out list))
+            {
+                list = await _toDoService.FindAllAsync();
+                _cache.Set("classe", list, cacheOptions);
+            }
+            else
+            {
+                list = _cache.Get("task") as List<ToDo>;
+            }
+
+            var toDo = list.Find(t => t.Id == id);
             if (toDo == null)
             {
                 return NotFound();
@@ -96,6 +134,8 @@ namespace ToDoList.Controllers
             {
                 TempData["confirm"] = toDo.Name + " atualizada com sucesso.";
                 await _toDoService.UpdateAsync(toDo);
+                list = await _toDoService.FindAllAsync();
+                _cache.Set("task", list, cacheOptions);
                 return RedirectToAction(nameof(Index));
             }
             return View(toDo);
@@ -110,7 +150,17 @@ namespace ToDoList.Controllers
                 return NotFound();
             }
 
-            var toDo = await _toDoService.FindById(id);
+            if (!_cache.TryGetValue("task", out list))
+            {
+                list = await _toDoService.FindAllAsync();
+                _cache.Set("classe", list, cacheOptions);
+            }
+            else
+            {
+                list = _cache.Get("task") as List<ToDo>;
+            }
+
+            var toDo = list.Find(t => t.Id == id);
             if (toDo == null)
             {
                 return NotFound();
@@ -127,6 +177,8 @@ namespace ToDoList.Controllers
             var obj = await _toDoService.FindById(id);
             TempData["confirm"] = obj.Name + " deletada com sucesso.";
             await _toDoService.RemoveAsync(id);
+            list = await _toDoService.FindAllAsync();
+            _cache.Set("task", list, cacheOptions);
             return RedirectToAction(nameof(Index));
         }
     }
