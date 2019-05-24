@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ToDoList.Data;
 using ToDoList.Services;
+using ToDoList.Services.Interfaces;
 
 namespace ToDoList
 {
@@ -34,9 +35,9 @@ namespace ToDoList
 
             services.AddDbContext<Context>(options => options.UseSqlServer(Configuration.GetConnectionString("TaskContext")));
 
-            services.AddScoped<TodoService>();
-
             services.AddMemoryCache();
+        
+            services.AddScoped<TodoService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

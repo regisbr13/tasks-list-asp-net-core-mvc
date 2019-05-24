@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using ToDoList.Models;
+using ToDoList.Models.ViewModels;
 using ToDoList.Services;
 
 namespace ToDoList.Controllers
@@ -49,7 +51,7 @@ namespace ToDoList.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id nulo" });
             }
 
             if (!_cache.TryGetValue("task", out list))
@@ -64,7 +66,7 @@ namespace ToDoList.Controllers
             var toDo = list.Find(t => t.Id == id);
             if (toDo == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não encontrado" });
             }
 
             return View(toDo);
@@ -99,7 +101,7 @@ namespace ToDoList.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id nulo" });
             }
 
             if (!_cache.TryGetValue("task", out list))
@@ -115,7 +117,7 @@ namespace ToDoList.Controllers
             var toDo = list.Find(t => t.Id == id);
             if (toDo == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não encontrado" });
             }
             return View(toDo);
         }
@@ -127,7 +129,7 @@ namespace ToDoList.Controllers
         {
             if (id != toDo.Id)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não encontrado" });
             }
 
             if (ModelState.IsValid)
@@ -147,7 +149,7 @@ namespace ToDoList.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id nulo" });
             }
 
             if (!_cache.TryGetValue("task", out list))
@@ -163,7 +165,7 @@ namespace ToDoList.Controllers
             var toDo = list.Find(t => t.Id == id);
             if (toDo == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não encontrado" });
             }
 
             return View(toDo);
@@ -174,12 +176,23 @@ namespace ToDoList.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            var obj = await _toDoService.FindById(id);
+            var obj = await _toDoService.FindByIdAsync(id);
             TempData["confirm"] = obj.Name + " deletada com sucesso.";
             await _toDoService.RemoveAsync(id);
             list = await _toDoService.FindAllAsync();
             _cache.Set("task", list, cacheOptions);
             return RedirectToAction(nameof(Index));
+        }
+
+        // Tratamento de erros:
+        public IActionResult Error(string message)
+        {
+            var viewModel = new ErrorViewModel
+            {
+                Message = message,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+            return View(viewModel);
         }
     }
 }
